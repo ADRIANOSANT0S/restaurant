@@ -23,7 +23,8 @@ body {
     border-bottom: 1px solid #b8341a;
 }
 
-#header button {
+#header button,
+.modal-content {
     background-color: #f3ebcc;
 }
 
@@ -40,7 +41,9 @@ footer {
 
 #header .nav-link.active,
 #menu aside button.active,
-#contact button {
+#contact button,
+.modal-content button,
+.modal-content button:hover {
     background-color: var(--btn-color);
     color:  #f3ebcc;
 }

@@ -35,6 +35,10 @@ $(document).ready(function () {
     // Desabilita o buttão do formulario caso o campo nome esteja incompleto
     $('form').on('submit', function(event) {
         event.preventDefault()
+
+        let form = $('form');
+        let modal = new bootstrap.Modal(document.getElementById('myModal'));
+
         const fullname = $('#fullname')
 
         if (fullname.val().split(' ').length < 2) {
@@ -42,9 +46,15 @@ $(document).ready(function () {
 
             fullname.css({
                 border: '2px solid red'
-            });
-            
-        }
+            });  
+        } 
+
+        modal.show()
+        
+        $('#fullname').val('')
+        $('#email').val('')
+        $('#phonumber').val('')
+        $('#message').val('')
     })
 
 });
