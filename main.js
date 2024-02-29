@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    let camposInvalidos = 0; // Variável para armazenar a quantidade de campos inválidos
+    let mensagemExibida = false; //Variável que garante que vai ser exibido apenas um alert de campos inválidos.
+
     // Aplica mascara ao campo telefone
     $('#phonumber').mask('(00) 0 0000-0000')
 
@@ -12,7 +15,7 @@ $(document).ready(function () {
                 required: true,
                 email: true
             },
-            massage: {
+            message: {
                 required: true
             }
         },
@@ -23,13 +26,14 @@ $(document).ready(function () {
             message: `Por favor, isira uma menssagem`
         },
 
-        //verifica os campos não prenchidos do formulario
-        invalidHandler: function(event, validador) {
-            let camposInvalid = validador.numberOfInvalids()
-            if (camposInvalid) {
-                alert(`Existe ${camposInvalid} campos incorretos`)
+        invalidHandler: function(event, validator) {
+            camposInvalidos = validator.numberOfInvalids(); // Atualiza o número de campos inválidos
+            if (camposInvalidos && !mensagemExibida) { // Verifica se há campos inválidos e se a mensagem ainda não foi exibida
+                alert(`Existe ${camposInvalidos} campo(s) incorreto(s)`);
+                mensagemExibida = true; // Define a flag como true para indicar que a mensagem foi exibida
             }
         }
+
     })
 
     // Desabilita o buttão do formulario caso o campo nome esteja incompleto
@@ -39,22 +43,18 @@ $(document).ready(function () {
         let form = $('form');
         let modal = new bootstrap.Modal(document.getElementById('myModal'));
 
-        const fullname = $('#fullname')
+        const fullname = $('#fullname');
+        const email = $('#email');
+        const message = $('#message');
 
-        if (fullname.val().split(' ').length < 2) {
-            $('button').prop('disabled', true)
-
-            fullname.css({
-                border: '2px solid red'
-            });  
-        } 
-
-        modal.show()
-        
-        $('#fullname').val('')
-        $('#email').val('')
-        $('#phonumber').val('')
-        $('#message').val('')
+        if (form.valid()) {
+            modal.show();
+            fullname.val('');
+            email.val('');
+            $('#phonumber').val('');
+            message.val('');
+            mensagemExibida = false;
+        }
     })
 
 });
